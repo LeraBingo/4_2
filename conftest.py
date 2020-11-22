@@ -17,5 +17,5 @@ def browser(request):
     options = Options()
     options.add_experimental_option('prefs', {'intl.accept_languages': lang_value})
     browser = webdriver.Chrome(options=options)
-    yield browser            #here the test_items.py code will be executed
+    yield browser
     browser.quit()
