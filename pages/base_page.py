@@ -3,30 +3,23 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoAlertPresentException
+from .locators import BasePageLocators as BPL, MainPageLocators as MPL
 import math
 
-class BasePage():
+
+class BasePage:
+
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
 
-    def open(self):
-        self.browser.get(self.url)
+    # waits for an element to disappear
 
-    def is_element_present(self, how, what):
-        try:
-            self.browser.find_element(how, what)
-        except (NoSuchElementException):
-            return False
-        return True
+    def go_to_basket_page(self):
+        link = self.browser.find_element(*MPL.VIEW_BASKET)
+        link.click()
 
-    def is_not_element_present(self, how, what, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
-        except TimeoutException:
-            return True
-        return False
 
     def is_disappeared(self, how, what, timeout=4):
         try:
@@ -36,6 +29,46 @@ class BasePage():
             return False
         return True
 
+    # checks the presence of an element
+
+    def is_element_present(self, how, what):
+        try:
+            self.browser.find_element(how, what)
+        except NoSuchElementException:
+            return False
+        return True
+
+    # checks the absence of an element
+
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+        return False
+
+    # goes to the login page. NOTE: Login link is invalid!!
+
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BPL.LOGIN_LINK_INVALID)
+        link.click()
+
+    # gets a link
+
+    def open(self):
+        self.browser.get(self.url)
+
+    # checks the presence of the login link
+
+    def should_be_login_link(self):
+        assert self.is_element_present(*BPL.LOGIN_LINK), "Login link is not presented"  # from base_page.py
+
+    # checks the presence of the "View basket" button
+
+    def should_be_view_basket_button(self):
+        assert self.is_element_present(*MPL.VIEW_BASKET), "The view basket button is not presented"
+
+    # solves the quiz in the alert
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
