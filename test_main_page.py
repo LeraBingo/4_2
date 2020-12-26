@@ -1,7 +1,6 @@
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
 from pages.basket_page import BasketPage
-from pages.product_page import ProductPage
 import pytest
 
 
@@ -40,16 +39,4 @@ def test_guest_cant_see_product_in_basket_opened_from_main_page(browser, request
     basket.should_be_basket_is_empty_text(request)  # checks the text telling that the basket is empty
 
 
-# checks if the basket is empty from the PRODUCT page.
-# NOTE! If you want to check it for another product, you must change the link
 
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, request):
-    link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
-    page = ProductPage(browser, link)
-    page.open()
-    page.check_this_is_product_page()  # check if this is really product page
-    page.should_be_view_basket_button()  # checks the presence of "View basket" button
-    page.go_to_basket_page()  # goes to the basket
-    basket = BasketPage(browser, browser.current_url)
-    basket.should_be_no_items_in_basket()   # checks the absence of items in the basket
-    basket.should_be_basket_is_empty_text(request)  # checks the presence of the text telling that the basket is empty
