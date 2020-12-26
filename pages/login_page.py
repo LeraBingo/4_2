@@ -4,6 +4,21 @@ from .locators import LoginPageLocators as LPL
 
 class LoginPage(BasePage):
 
+    # checks the presence of the registration form
+
+    def should_be_register_form(self):
+        assert self.is_element_present(*LPL.REGISTRATION_FORM), "Registration form is not presented"
+
+    # registers a user
+
+    def register_new_user(self, email, password):
+        self.should_be_register_form()  # from login_page
+        self.browser.find_element(*LPL.EMAIL_FOR_REGISTRATION).send_keys(email)
+        self.browser.find_element(*LPL.PASSWORD_FOR_REGISTRATION).send_keys(password)
+        self.browser.find_element(*LPL.CONFIRM_PASSWORD_FOR_REGISTRATION).send_keys(password)
+        self.browser.find_element(*LPL.REGISTER_BUTTON).click()
+        self.should_be_success_registration_message()
+
     # checks the presence of the login form
 
     def should_be_login_form(self):
@@ -22,7 +37,7 @@ class LoginPage(BasePage):
     def should_be_login_url(self):
         assert self.browser.current_url == LPL.URL, "Login form is not presented"
 
-    # checks the presence of the registration form
+    # checks if the message about a successful registration is present
 
-    def should_be_register_form(self):
-        assert self.is_element_present(*LPL.REGISTRATION_FORM), "Registration form is not presented"
+    def should_be_success_registration_message(self):
+        assert self.is_element_present(*LPL.SUCCESS_REGISTRATION_MESSAGE), "Success message is not presented"

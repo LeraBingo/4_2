@@ -14,12 +14,13 @@ class BasePage:
         self.url = url
         self.browser.implicitly_wait(timeout)
 
-    # waits for an element to disappear
+    # goes to the basket page by clicking the basket icon
 
     def go_to_basket_page(self):
         link = self.browser.find_element(*MPL.VIEW_BASKET)
         link.click()
 
+    # waits for an element to disappear
 
     def is_disappeared(self, how, what, timeout=4):
         try:
@@ -47,16 +48,22 @@ class BasePage:
             return True
         return False
 
-    # goes to the login page. NOTE: Login link is invalid!!
+    # goes to the login page.
 
     def go_to_login_page(self):
-        link = self.browser.find_element(*BPL.LOGIN_LINK_INVALID)
+        link = self.browser.find_element(*BPL.LOGIN_LINK)
         link.click()
 
     # gets a link
 
     def open(self):
         self.browser.get(self.url)
+
+    # checks if a user is authorized
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BPL.USER_ICON), "User icon is not presented," \
+                                                        " probably unauthorised user"
 
     # checks the presence of the login link
 

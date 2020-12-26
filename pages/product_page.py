@@ -10,7 +10,7 @@ class ProductPage(BasePage):
     product_price = ''
     product_description = ''
 
-    # the methods below (used in test_product_page.py) to check the presence of elements - add to the basket - solve the
+    # the methods below are to check the presence of elements - add to the basket - solve the
     # quiz - check the success msg
 
     def check_this_is_product_page(self):
@@ -66,3 +66,5 @@ class ProductPage(BasePage):
 
     def should_not_be_success_message(self):
         assert self.is_not_element_present(*PPL.SUCCESS_MESSAGES), "Success message is presented, but should not be"
+
+
