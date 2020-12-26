@@ -3,6 +3,7 @@ from .locators import BasketPageLocators as BPL
 
 
 class BasketPage(BasePage):
+
     # the dictionary stores "Your basket is empty." text in all the available languages
 
     languages = {
@@ -29,15 +30,16 @@ class BasketPage(BasePage):
         "zh-cn": "Your basket is empty.",
     }
 
-    # startswith is used because txt_to_check_if_basket_is_empty will ALSO store "Continue shopping" text from <a>
-    # check if basket is empty -> if true, check that the 1st sentence of txt == dictionary[value]
+    # NOTE! startswith is used because txt_to_check_if_basket_is_empty will ALSO store "Continue shopping" text from
+    # <a> checks if the basket is empty -> if true, checks that the 1st sentence of txt == the value in the
+    # dictionary for the language specified
 
     def should_be_basket_is_empty_text(self, request):
         current_language = request.config.option.language  # to take --language value from the console
         txt_to_check_if_basket_is_empty = self.browser.find_element(*BPL.EMPTY_BASKET_TEXT).text
         assert txt_to_check_if_basket_is_empty.startswith(self.languages[current_language]), "The basket is not empty"
 
-    # checks the absence of items
+    # checks the absence of items in the basket
 
     def should_be_no_items_in_basket(self):
         assert self.is_not_element_present(*BPL.ITEMS), "There is 1 or more items in the basket"

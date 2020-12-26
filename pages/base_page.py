@@ -17,8 +17,8 @@ class BasePage:
     # goes to the basket page by clicking the basket icon
 
     def go_to_basket_page(self):
-        link = self.browser.find_element(*MPL.VIEW_BASKET)
-        link.click()
+        link = self.browser.find_element(*MPL.VIEW_BASKET)  # finds "View basket" button
+        link.click() # goes to the basket page
 
     # waits for an element to disappear
 
@@ -51,8 +51,8 @@ class BasePage:
     # goes to the login page.
 
     def go_to_login_page(self):
-        link = self.browser.find_element(*BPL.LOGIN_LINK)
-        link.click()
+        link = self.browser.find_element(*BPL.LOGIN_LINK)  # find a login link
+        link.click()  # goes to login link
 
     # gets a link
 
