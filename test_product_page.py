@@ -1,7 +1,8 @@
-from pages.product_page import ProductPage
-from pages.login_page import LoginPage
-from pages.basket_page import BasketPage
 import pytest
+from .pages.product_page import ProductPage
+from .pages.login_page import LoginPage
+from .pages.basket_page import BasketPage
+
 import time
 import secrets
 import string
