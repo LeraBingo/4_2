@@ -1,6 +1,6 @@
-from pages.product_page import ProductPage
-from pages.login_page import LoginPage
-from pages.basket_page import BasketPage
+from .product_page import ProductPage
+from .login_page import LoginPage
+from .basket_page import BasketPage
 import pytest
 import time
 import secrets
