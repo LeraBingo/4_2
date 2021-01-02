@@ -13,8 +13,6 @@ def pytest_addoption(parser):
 def browser(request):
     lang_value = request.config.option.language
 
-    if lang_value is None:
-        lang_value = 'en-gb'    #default language. if no language has been entered
     options = Options()
     options.add_experimental_option('prefs', {'intl.accept_languages': lang_value})
     browser = webdriver.Chrome(options=options)
